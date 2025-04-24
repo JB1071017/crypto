@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .animated-gradient {
+            background: linear-gradient(45deg, #004AAD, #001F54, #0074E4);
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 16px;
+        }
+    </style>
+</head>
+
+<body class="bg-[#001F54] text-white font-sans">
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="animated-gradient text-white h-screen p-6 transition-all duration-300" style="width: 250px;">
+            <h3 class="text-center uppercase font-bold text-2xl mb-6">Admin Dashboard</h3>
+            <ul class="space-y-4">
+                <li><a class="block hover:bg-[#0074E4] p-3 rounded transition" href="#">Dashboard</a></li>
+                <li><a class="block hover:bg-[#0074E4] p-3 rounded transition" href="/users/">Users</a></li>
+                <li><a class="block hover:bg-[#0074E4] p-3 rounded transition" href="/products/">Add Products</a></li>
+                <li><a class="block hover:bg-[#0074E4] p-3 rounded transition" href="/product_list/">View Products</a></li>
+                <li><a class="block hover:bg-red-500 p-3 rounded transition" href="/logoutadmin/">Logout</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div id="main-content" class="flex-grow p-6">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="font-bold text-3xl">Welcome, Admin</h2>
+                <button id="toggleSidebar" class="px-4 py-2 border border-white text-white rounded hover:bg-white hover:text-[#001F54] transition">
+                    Toggle Sidebar
+                </button>
+            </div>
+
+            <!-- Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="dashboard-cards">
+                <div class="glass-effect text-center hover:scale-105 transition">
+                    <h5 class="text-2xl font-semibold mb-3">Total Users</h5>
+                    <p class="text-2xl font-bold text-[#0074E4]" id="total-users">Loading...</p>
+                </div>
+                <div class="glass-effect text-center hover:scale-105 transition">
+                    <h5 class="text-2xl font-semibold mb-3">Active Sessions</h5>
+                    <p class="text-2xl font-bold text-green-400" id="active-sessions">Loading...</p>
+                </div>
+                <div class="glass-effect text-center hover:scale-105 transition">
+                    <h5 class="text-2xl font-semibold mb-3">Reports Generated</h5>
+                    <p class="text-2xl font-bold text-red-400" id="reports-generated">Loading...</p>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="glass-effect mt-8">
+                <div class="bg-[#0074E4] text-white p-4 rounded-t-lg">
+                    <h5 class="text-xl font-semibold">Recent Activities</h5>
+                </div>
+                <div class="p-4">
+                    <ul class="space-y-2" id="recent-activities">
+                        <li class="p-2 border-b">Loading recent activities...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="glass-effect mt-8">
+                <div class="bg-[#0074E4] text-white p-4 rounded-t-lg">
+                    <h5 class="text-xl font-semibold">Services Management</h5>
+                </div>
+                <div class="p-4 text-center">
+                    <button class="px-4 py-2 bg-[#0074E4] text-[#001F54] font-bold rounded-lg hover:bg-[#004AAD] hover:text-white transition" 
+                        onclick="window.location.href='/services/'">
+                        Add Services
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="glass-effect mt-8">
+                <div class="bg-[#0074E4] text-white p-4 rounded-t-lg">
+                    <h5 class="text-xl font-semibold">User Feedback</h5>
+                </div>
+                <div class="p-4 text-center">
+                    <button class="px-4 py-2 bg-[#0074E4] text-[#001F54] font-bold rounded-lg hover:bg-[#004AAD] hover:text-white transition" 
+                        onclick="window.location.href='/adminfeed/'">
+                        View Feedback
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Sidebar toggle functionality
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+
+</html>

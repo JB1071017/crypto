@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1A237E', /* Deep Blue */
+                        secondary: '#4FC3F7', /* Light Cyan */
+                        accent: '#00B0FF' /* Bright Blue */
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1A237E, #4FC3F7);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            max-width: 450px;
+            width: 100%;
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+        }
+        input, select {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border: none;
+            padding: 0.6rem;
+            border-radius: 10px;
+            color: white;
+        }
+        input::placeholder, select {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card text-center">
+        <h2 class="text-white text-2xl font-bold mb-4">Edit Profile</h2>
+
+        <!-- Form -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3 text-left">
+                <label for="name" class="text-white">Name</label>
+                <input type="text" id="name" name="name" class="w-full" value="{{ user1.name }}" required>
+            </div>
+
+            <div class="mb-3 text-left">
+                <label for="email" class="text-white">Email</label>
+                <input type="email" id="email" name="email" class="w-full" value="{{ user1.email }}" required>
+            </div>
+
+            <div class="mb-3 text-left">
+                <label for="password" class="text-white">Password</label>
+                <input type="password" id="password" name="password" class="w-full" required>
+            </div>
+
+            <div class="mb-3 text-left">
+                <label for="profileimg" class="text-white">Profile Image</label>
+                <input type="file" id="profileimg" name="profileimg" class="w-full">
+                {% if user1.profileimg %}
+                    <img src="{{ user1.profileimg.url }}" alt="Profile Image" class="profile-img mx-auto mt-3">
+                {% endif %}
+            </div>
+
+            <div class="mb-3 text-left">
+                <label for="gender" class="text-white">Gender</label>
+                <select id="gender" name="gender" class="w-full">
+                    <option value="Male" {% if user1.gender == "Male" %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if user1.gender == "Female" %}selected{% endif %}>Female</option>
+                    <option value="Others" {% if user1.gender == "Others" %}selected{% endif %}>Others</option>
+                </select>
+            </div>
+
+            <div class="mb-3 text-left">
+                <label for="age" class="text-white">Age</label>
+                <input type="number" id="age" name="age" class="w-full" value="{{ user1.age }}" min="1" max="100" required>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-between mt-4">
+                <button type="submit" class="bg-accent text-white px-4 py-2 rounded hover:bg-secondary transition">Save Changes</button>
+                <a href="{% url 'profile' %}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

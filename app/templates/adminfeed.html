@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Feedbacks</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF', /* Dark Blue */
+                        secondary: '#60A5FA', /* Light Blue */
+                        darkBg: '#1F2937', /* Dark Background */
+                        glassBg: 'rgba(255, 255, 255, 0.1)',
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1E40AF, #60A5FA);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        th {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glass-container">
+        <h2 class="text-center text-white text-2xl font-bold mb-4">User Feedbacks</h2>
+
+        <!-- Check if feedbacks are available -->
+        {% if feedbacks %}
+        <div class="overflow-x-auto">
+            <table class="text-white">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Rating</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feedback in feedbacks %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ feedback.name }}</td>
+                        <td>{{ feedback.email }}</td>
+                        <td>{{ feedback.message }}</td>
+                        <td class="font-semibold text-yellow-400">{{ feedback.rating }}</td>
+                        <td>{{ feedback.timestamp|date:"d M Y, H:i" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center text-gray-300 mt-4">
+            No feedbacks available.
+        </div>
+        {% endif %}
+
+        <!-- Back to Dashboard Button -->
+        <div class="text-center mt-6">
+            <a href="/admindash/" class="btn-glass">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

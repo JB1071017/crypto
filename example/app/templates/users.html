@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Users List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {% if messages %}
+    <div class="alert-container my-3">
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mt-5">
+        <!-- Dashboard Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-gray-700">Admin Dashboard</h1>
+            <a href="{% url 'logoutadmin' %}" class="btn btn-danger">Logout</a>
+        </div>
+
+        <!-- User List Section -->
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Users List</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-bordered">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Age</th>
+                            <th>Profile Image</th>
+                            <th>Approval Status</th> <!-- Added Approval Status column -->
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if users %}
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.gender }}</td>
+                            <td>{{ user.age }}</td>
+                            <td>
+                                {% if user.profileimg %}
+                                    <img src="{{ user.profileimg.url }}" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px;">
+                                {% else %}
+                                    <span class="text-muted">No Image</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.approvalstatus %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_user' user.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                <!-- Approval Status Button -->
+                            
+                                    {% if user.approvalstatus %}
+                                        <a href="{% url 'approve_user' user.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to change the approval status?')">Disapprove</a>
+                                    {% else %}
+                                        <a href="{% url 'approve_user' user.id %}" class="btn btn-sm btn-info" onclick="return confirm('Are you sure you want to change the approval status?')">Approve</a>
+                                    {% endif %}
+                                
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">No users found.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

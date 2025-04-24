@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1A237E', /* Deep Blue */
+                        secondary: '#4FC3F7', /* Light Cyan */
+                        accent: '#00B0FF' /* Bright Blue */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1A237E, #4FC3F7);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-card">
+        <h2 class="text-center text-2xl font-bold text-white mb-4">Verify OTP</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="otp" class="text-white">OTP Code</label>
+                <input type="text" class="w-full p-2 rounded bg-white text-gray-900" id="otp" name="otp" required>
+            </div>
+            <button type="submit" class="w-full p-2 bg-accent text-white rounded font-semibold hover:bg-secondary transition">Verify OTP</button>
+        </form>
+    </div>
+    
+    {% if otp_error %}
+    <script>
+        window.alert("OTP is wrong, please try again.");
+    </script>
+    {% endif %}
+</body>
+</html>

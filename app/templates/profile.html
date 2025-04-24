@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1A237E', /* Deep Blue */
+                        secondary: '#4FC3F7', /* Light Cyan */
+                        accent: '#00B0FF' /* Bright Blue */
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1A237E, #4FC3F7);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            max-width: 450px;
+            width: 100%;
+        }
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card text-center">
+        <h2 class="text-white text-2xl font-bold mb-4">User Profile</h2>
+
+        <!-- Profile Image -->
+        <div class="mb-4">
+            <img 
+                src="{{ user1.profileimg.url }}" 
+                alt="Profile Image" 
+                class="profile-img shadow-lg mx-auto">
+        </div>
+
+        <!-- User Details -->
+        <div class="text-white text-left">
+            <p class="mb-2"><strong>Name:</strong> {{ user1.name }}</p>
+            <p class="mb-2"><strong>Email:</strong> {{ user1.email }}</p>
+            <p class="mb-2"><strong>Gender:</strong> {{ user1.gender }}</p>
+            <p class="mb-2"><strong>Age:</strong> {{ user1.age }}</p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-4">
+            <a href="/edit/" class="bg-accent text-white px-4 py-2 rounded hover:bg-secondary transition">Edit Profile</a>
+            <a href="{% url 'index' %}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition">Logout</a>
+        </div>
+    </div>
+
+</body>
+</html>

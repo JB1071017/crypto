@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Deletion</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#DC2626', /* Red */
+                        secondary: '#4B5563', /* Gray */
+                        glassBg: 'rgba(255, 255, 255, 0.2)',
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .glass-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glass-container">
+        <h3 class="text-xl font-bold text-red-500">Confirm Deletion</h3>
+        <p class="mt-2 text-lg">Are you sure you want to delete <br> <strong>{{ product.name }}</strong>?</p>
+        
+        <form method="POST" class="mt-4">
+            {% csrf_token %}
+            <button type="submit" class="btn-glass bg-red-600 hover:bg-red-700">Yes, Delete</button>
+            <a href="{% url 'product_list' %}" class="btn-glass bg-gray-600 hover:bg-gray-700 ml-2">Cancel</a>
+        </form>
+    </div>
+
+</body>
+
+</html>

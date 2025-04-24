@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="bg-primary text-white h-screen p-3" style="width: 250px;">
+            <h3 class="text-center text-uppercase font-bold mb-4">Admin Dashboard</h3>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white hover:bg-blue-600 p-2 rounded" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white hover:bg-blue-600 p-2 rounded" href="/users/">Users</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white hover:bg-blue-600 p-2 rounded" href="#">Settings</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white hover:bg-blue-600 p-2 rounded" href="/products/">Add Products</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white hover:bg-blue-600 p-2 rounded" href="/product_list/">View Products</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white hover:bg-blue-600 p-2 rounded" href="/logoutadmin/">Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div id="main-content" class="flex-grow p-4">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="font-bold text-lg text-gray-700">Welcome, Admin</h2>
+                <button id="toggleSidebar" class="btn btn-outline-primary">Toggle Sidebar</button>
+            </div>
+
+            <!-- Cards Section -->
+            <div class="row" id="dashboard-cards">
+                <div class="col-md-4">
+                    <div class="card bg-light shadow-sm border-0 mb-4">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Total Users</h5>
+                            <p class="text-lg font-bold text-primary" id="total-users">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light shadow-sm border-0 mb-4">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Active Sessions</h5>
+                            <p class="text-lg font-bold text-success" id="active-sessions">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light shadow-sm border-0 mb-4">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Reports Generated</h5>
+                            <p class="text-lg font-bold text-danger" id="reports-generated">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Recent Activities</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group" id="recent-activities">
+                        <li class="list-group-item">Loading recent activities...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Services Management</h5>
+                </div>
+                <div class="card-body text-center">
+                    <button class="btn btn-primary" onclick="window.location.href='/services/'">Add Services </button>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">User Feedback</h5>
+                </div>
+                <div class="card-body text-center">
+                    <!-- Updated "View Feedback" Button -->
+                    <button class="btn btn-primary" onclick="window.location.href='/adminfeed/'">View Feedback</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Sidebar toggle functionality
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.toggle('d-none');
+            mainContent.classList.toggle('flex-grow');
+        });
+    </script>
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('.btn.btn-primary').addEventListener('click', function() {
+            window.location.href = '/adminfeed/';
+        });
+    </script>
+    <script>
+        // Add Services button functionality
+        document.querySelector('.btn.btn-primary').addEventListener('click', function() {
+            const confirmAction = confirm("Are you sure you want to navigate to the Add Services page?");
+            if (confirmAction) {
+                window.location.href = '/services/';
+            }
+        });
+    </script>
+    
+    
+
+    
+
+</body>
+
+</html>

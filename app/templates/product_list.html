@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-[#190E68] to-[#00BBF0] min-h-screen flex items-center justify-center">
+
+    <div class="container mx-auto px-6 py-10">
+        <h2 class="text-5xl font-extrabold text-center mb-10 text-white drop-shadow-lg">Product List</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for product in products %}
+            <div class="bg-white/20 backdrop-blur-lg rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h5 class="text-2xl font-semibold text-white mb-3">{{ product.name }}</h5>
+                    <p class="text-sm text-gray-200">Category: {{ product.category }}</p>
+                    <p class="text-gray-300 mt-1">{{ product.description }}</p>
+                    <p class="text-white font-medium mt-2">Price: ₹{{ product.price }}</p>
+                    <p class="text-white font-medium">Stock: {{ product.stock }}</p>
+                    <p class="text-[#40E9E0] font-semibold">Discount: {{ product.discount }}%</p>
+
+                    <div class="flex space-x-3 mt-4">
+                        <a href="{% url 'edit_product' product.id %}"
+                           class="px-4 py-2 bg-[#40E9E0] text-[#190E68] font-semibold rounded-lg hover:bg-[#00BBF0] hover:text-white transition">
+                            Edit
+                        </a>
+                        <a href="{% url 'delete_product' product.id %}"
+                           class="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <p class="mt-10 text-center text-gray-200">
+            Back to Home <a href="/products/" class="text-[#40E9E0] font-bold hover:underline">Go back</a>
+        </p>
+    </div>
+
+</body>
+</html>

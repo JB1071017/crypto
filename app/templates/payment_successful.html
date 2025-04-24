@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful 🎉</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#16A34A', /* Green */
+                        secondary: '#6B7280', /* Gray */
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #16A34A, #22C55E);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden; /* Prevents scrolling due to confetti */
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-glass {
+            display: block;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="confettiCanvas"></canvas> <!-- Confetti Effect -->
+
+    <div class="glass-container">
+        <div class="text-center">
+            <svg class="mx-auto w-16 h-16 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.59 7.41L10 15.17l-2.59-2.58L6 14l4 4 8-8-1.41-1.41z" clip-rule="evenodd"/>
+            </svg>
+        </div>
+
+        <h2 class="text-white text-2xl font-bold mt-3">Payment Successful 🎉</h2>
+        <p class="text-white mt-2">Thank you for your purchase! Your payment has been processed successfully.</p>
+
+        <div class="mt-4 space-y-3">
+            <a href="{% url 'generate_invoice' transaction.id %}" class="btn-glass bg-green-700 hover:bg-green-800">Download Invoice</a>
+            <a href="/about" class="btn-glass bg-gray-600 hover:bg-gray-700">Go to About</a>
+        </div>
+    </div>
+
+    <!-- Confetti Effect -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const canvas = document.getElementById("confettiCanvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const confetti = [];
+
+            function randomColor() {
+                const colors = ["#ff0", "#ff4500", "#00ff00", "#00f", "#ff1493"];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            function createConfetti() {
+                return {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 2,
+                    speed: Math.random() * 3 + 1,
+                    color: randomColor()
+                };
+            }
+
+            for (let i = 0; i < 100; i++) {
+                confetti.push(createConfetti());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                confetti.forEach((c, i) => {
+                    c.y += c.speed;
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+                    ctx.fillStyle = c.color;
+                    ctx.fill();
+                    if (c.y > canvas.height) confetti[i] = createConfetti();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        });
+    </script>
+
+</body>
+
+</html>

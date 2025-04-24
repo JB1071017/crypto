@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Users List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#004AAD',   /* Deep Blue */
+                        secondary: '#001F54', /* Dark Navy */
+                        accent: '#0074E4'     /* Bright Blue */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-secondary text-white font-sans">
+    <div class="max-w-7xl mx-auto p-6">
+        <!-- Dashboard Header -->
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-white">Admin Dashboard</h1>
+            <a href="{% url 'logoutadmin' %}" class="bg-accent hover:bg-primary text-white font-semibold py-2 px-4 rounded">Logout</a>
+        </div>
+        
+        <!-- User List Section -->
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden text-black">
+            <div class="bg-primary px-6 py-4">
+                <h3 class="text-xl font-semibold text-white">Users List</h3>
+            </div>
+            <div class="p-6 overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-300">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">#</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Name</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Email</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Gender</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Age</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Profile Image</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Approval Status</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% if users %}
+                        {% for user in users %}
+                        <tr class="hover:bg-gray-200">
+                            <td class="px-4 py-2">{{ forloop.counter }}</td>
+                            <td class="px-4 py-2">{{ user.name }}</td>
+                            <td class="px-4 py-2">{{ user.email }}</td>
+                            <td class="px-4 py-2">{{ user.gender }}</td>
+                            <td class="px-4 py-2">{{ user.age }}</td>
+                            <td class="px-4 py-2">
+                                {% if user.profileimg %}
+                                <img src="{{ user.profileimg.url }}" alt="Profile Image" class="rounded-full w-12 h-12 object-cover">
+                                {% else %}
+                                <span class="text-gray-500">No Image</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-2">
+                                {% if user.approvalstatus %}
+                                <span class="px-2 py-1 rounded-full bg-green-500 text-white text-xs font-semibold">Approved</span>
+                                {% else %}
+                                <span class="px-2 py-1 rounded-full bg-yellow-500 text-black text-xs font-semibold">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-2 space-x-2">
+                                <a href="{% url 'delete_user' user.id %}" class="inline-block bg-red-500 hover:bg-red-600 text-white text-xs font-medium py-1 px-3 rounded" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                                {% if user.approvalstatus %}
+                                <a href="{% url 'approve_user' user.id %}" class="inline-block bg-red-500 hover:bg-red-600 text-white text-xs font-medium py-1 px-3 rounded" onclick="return confirm('Are you sure you want to change the approval status?')">Disapprove</a>
+                                {% else %}
+                                <a href="{% url 'approve_user' user.id %}" class="inline-block bg-accent hover:bg-primary text-white text-xs font-medium py-1 px-3 rounded" onclick="return confirm('Are you sure you want to change the approval status?')">Approve</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center py-4">No users found.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

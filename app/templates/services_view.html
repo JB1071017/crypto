@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1A237E', /* Deep Blue */
+                        secondary: '#4FC3F7', /* Light Cyan */
+                        accent: '#00B0FF' /* Bright Blue */
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1A237E, #4FC3F7);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            transition: 0.3s;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .service-img {
+            border-radius: 10px;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="text-white text-4xl font-bold text-center mt-10 mb-5">Our Services</h1>
+
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+        {% for service in services %}
+            <div class="glass-card p-4 text-center">
+                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="service-img">
+                <h2 class="text-white text-xl font-semibold mt-3">{{ service.name }}</h2>
+                <p class="text-gray-200 mt-2">{{ service.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
