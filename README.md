@@ -40,7 +40,7 @@ Crypto Store is a Django-based web application that allows users to **buy crypto
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/crypto-store.git
+git clone https://github.com/JB1071017/crypto.git
 cd crypto-store
 
 # Set up virtual environment
